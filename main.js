@@ -5,7 +5,7 @@ const display_output=document.querySelector('.display .output');
 let input="";
 
 for(let key of keys){
-    const value = key.dataset.key;
+    const value = key.dataset.key; // storing the data-key in the DOM by dataset function for value.  
 
     key.addEventListener('click',()=>{
         if(value=="clear"){
@@ -13,11 +13,11 @@ for(let key of keys){
             display_input.innerHTML="";
             display_output.innerHTML="";
         } else if(value=="backspace"){
-            input=input.slice(0,-1);
+            input=input.slice(0,-1);//remove the last char from input.
             display_input.innerHTML=input;
         }
         else if (value=="="){
-            let result=eval(PrepareInput(input));
+            let result=eval(PrepareInput(input));// eval method is called to evaluate the input.
             display_output.innerHTML=CleanOutput(result);
         }
         else if(value=="brackets"){
@@ -50,7 +50,7 @@ function CleanInput(input){
     let input_array_length=input_array.length;
     for(let i=0;i<input_array_length;i++){
         if(input_array[i]=="*"){
-         input_array[i]=`<span class="operator">x</span> `   ;
+         input_array[i]=`<span class="operator">x</span> `   ; // when operators are clicked then those symbol of operator is shown on the input.
         }
         else if(input_array[i]=="/"){
          input_array[i]=`<span class="operator">÷</span> `   ;
@@ -76,7 +76,7 @@ function CleanInput(input){
 
 function CleanOutput(output){
     let output_string=output.toString();
-    output_string=Number(output_string).toPrecision(5);
+    output_string=Number(output_string).toPrecision(5);// the answer only upto 5 numbers is stored.
     let decimal=output_string.split(".")[1];
     output_string=output_string.split(".")[0];
     let output_array =  output_string.split("");
@@ -85,7 +85,7 @@ function CleanOutput(output){
             return "Infinity";
         }
         for(let i=output_array.length-3;i>0;i-=3){
-          output_array.splice(i,0,",");
+          output_array.splice(i,0,",");// inserts "," between string after 3 numbers.
         }
     }
     if(decimal){
@@ -99,10 +99,10 @@ function validateInput(value){
     let last_input=input.slice(-1);
     let operators=["+","-","*","/"];
     if(value =="." && last_input=="."){
-        return false;
+        return false; // helps to avoid two decimals at once eg:5..90
     }
     if(operators.includes(value)){
-        if(operators.includes (last_input)){
+        if(operators.includes (last_input)){// helps to ignore 2 operators at once eg:3++5
             return false;
         }
         else {
@@ -116,7 +116,7 @@ function PrepareInput(input){
 let input_array=input.split("");
 for(let i=0;i<input_array.length;i++){ 
     if(input_array[i]=="%"){
-        input_array[i]="/100";
+        input_array[i]="/100";// for % we consider it as /100 ie divide by 100.
     }
 }
 return input_array.join("");
